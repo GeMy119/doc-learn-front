@@ -1,0 +1,19 @@
+<div style=" border: 1px gray solid; border-radius: 2%; color: black; margin: 100px;">
+  <div *ngIf="!dataReceived">
+    <p>No transaction data received.</p>
+    <!-- You can customize this message further -->
+  </div>
+  <div *ngIf="!dataReceived">
+    <p>{{transactionData}}</p>
+    <div *ngIf="transactionData">
+      <p [hidden]="transactionData.success == false">Payment successful!</p>
+      <p [hidden]="transactionData.success == true">Payment failed. Please try again.</p>
+
+      <!-- Button to navigate based on transaction success -->
+      <button (click)="transactionData.success ? navigateToExam() : navigateToPayment()">
+        {{ transactionData.success ? 'Go to Exam' : 'Try Payment Again' }}
+      </button>
+    </div>
+
+  </div>
+</div>
