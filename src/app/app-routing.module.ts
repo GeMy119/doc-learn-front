@@ -28,13 +28,13 @@ const routes: Routes = [
   { path: 'payment', component: PaymentNewComponent, canActivate: [AuthGuard] },
   { path: 'termsAndConditions', component: TermsAndConditionsComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'payment-status', component: PaymentStatusComponent, canActivate: [AuthGuard] },
+  { path: 'paymentStatus', component: PaymentStatusComponent, canActivate: [AuthGuard] },
   { path: 'videos', component: YoutubePageComponent },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
