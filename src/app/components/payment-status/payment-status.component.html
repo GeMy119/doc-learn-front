@@ -4,15 +4,15 @@
     <!-- You can customize this message further -->
   </div>
   <div *ngIf="transactionData">
-    <p>{{transactionData}}</p>
     <div *ngIf="transactionData">
-      <p [hidden]="transactionData.success == false">Payment successful!</p>
-      <p [hidden]="transactionData.success == true">Payment failed. Please try again.</p>
+      <p *ngIf="transactionData.success == true">Payment successful!</p>
+      <p *ngIf="transactionData.success == false">Payment failed. Please try again.</p>
 
       <!-- Button to navigate based on transaction success -->
-      <button (click)="transactionData.success ? navigateToExam() : navigateToPayment()">
+      <button class="btn btn-primary" (click)="transactionData.success ? navigateToExam() : navigateToPayment()">
         {{ transactionData.success ? 'Go to Exam' : 'Try Payment Again' }}
       </button>
+
     </div>
 
   </div>
