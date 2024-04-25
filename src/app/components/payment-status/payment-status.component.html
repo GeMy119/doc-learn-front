@@ -3,7 +3,7 @@
     <p>No transaction data received.</p>
     <!-- You can customize this message further -->
   </div>
-  <div *ngIf="!dataReceived">
+  <div *ngIf="transactionData">
     <p>{{transactionData}}</p>
     <div *ngIf="transactionData">
       <p [hidden]="transactionData.success == false">Payment successful!</p>

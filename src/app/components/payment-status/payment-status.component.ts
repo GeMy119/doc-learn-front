@@ -17,8 +17,8 @@ export class PaymentStatusComponent implements OnInit {
       this.transactionData = params;
       console.log('Transaction data from Paymob:', this.transactionData);
       if (this.transactionData) {
-        this.fetchTransactionData();
         this.dataReceived = true; // Set dataReceived to true
+        this.fetchTransactionData();
       } else {
         this.dataReceived = false; // Set dataReceived to false
       }
