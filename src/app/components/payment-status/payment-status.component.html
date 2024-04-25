@@ -5,8 +5,8 @@
   </div>
   <div *ngIf="transactionData">
     <div *ngIf="transactionData">
-      <p *ngIf="transactionData.success == true">Payment successful!</p>
-      <p *ngIf="transactionData.success == false">Payment failed. Please try again.</p>
+      <p *ngIf="transactionData.success == 'true'">Payment successful!</p>
+      <p *ngIf="transactionData.success == 'false'">Payment failed. Please try again.</p>
 
       <!-- Button to navigate based on transaction success -->
       <button class="btn btn-primary" (click)="transactionData.success ? navigateToExam() : navigateToPayment()">
