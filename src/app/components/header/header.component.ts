@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     // Send a request to your backend to log the user out
-    this.http.post<any>('http://localhost:4000/logout', {}).subscribe(
+    this.http.post<any>('https://doc-lern.vercel.app/logout', {}).subscribe(
       (response) => {
         console.log('Logout successful:', response);
         // Clear any local storage or session storage if needed
