@@ -3,7 +3,15 @@
 //   stripePublishableKey: 'pk_test_51OiEubE2Rb4TYvc4Nx4o7CK5cwdTLH51hEAyaZNg5wpJzu5oZZXkkoksQ5D7eUu4rsrXldnYQb0tOKA8kiEaL7xy005qQeBvQ9'
 // };
 
-export const environment = {
+// environment.ts
+
+export interface Environment {
+  production: boolean;
+  backEndUrl: string;
+  // Add other properties if any
+}
+
+export const environment: Environment = {
   production: true,
-  // apiBaseUrl: 'https://doc-lern.vercel.app/'
+  backEndUrl: "https://doc-learn-back-end.vercel.app"
 };

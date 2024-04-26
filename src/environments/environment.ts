@@ -2,8 +2,14 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  // production: true,
+export interface Environment {
+  production: boolean;
+  backEndUrl: string;
+  // Add other properties if any
+}
+
+export const environment: Environment = {
+  production: true,
   backEndUrl: "https://doc-learn-back-end.vercel.app"
 };
 
