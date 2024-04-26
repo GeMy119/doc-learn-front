@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from "../../../environments/environment"
 
 @Component({
   selector: 'app-payment-status',
@@ -28,7 +29,7 @@ export class PaymentStatusComponent implements OnInit {
   // Method to fetch the payment data
   fetchTransactionData(): void {
     // Make an HTTP POST request to fetch the payment data from the server
-    this.http.post<any>('https://doc-lern.vercel.app/callback', this.transactionData)
+    this.http.post<any>(`${environment.baseUrl}/callback`, this.transactionData)
       .subscribe(
         (response) => {
           // Handle the response data here

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from "../../../environments/environment"
+
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.valid) {
-      this.http.post<any>('https://doc-lern.vercel.app/login', this.loginForm.value)
+      this.http.post<any>(`${environment.baseUrl}/login`, this.loginForm.value)
         .subscribe(
           (response) => {
             console.log('Login successful:', response);

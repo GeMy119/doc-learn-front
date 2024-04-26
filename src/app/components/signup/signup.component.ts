@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from "../../../environments/environment"
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +36,7 @@ export class SignupComponent implements OnInit {
   onSubmit(): void {
     if (this.registerForm.valid) {
       this.isLoading = true;
-      this.http.post<any>('https://doc-lern.vercel.app/signup', this.registerForm.value)
+      this.http.post<any>(`${environment.baseUrl}/signup`, this.registerForm.value)
         .subscribe(
           (response) => {
             console.log('Signup successful:', response);
