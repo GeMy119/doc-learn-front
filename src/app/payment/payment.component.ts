@@ -13,7 +13,6 @@ export class PaymentComponent implements OnInit {
   constructor(private paymentService: PaymentService) { }
 
   ngOnInit() {
-    this.initiatePayment();
   }
 
   initiatePayment() {
