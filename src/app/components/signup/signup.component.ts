@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
   onSubmit(): void {
     if (this.registerForm.valid) {
       this.isLoading = true;
-      this.http.post<any>(`${environment.baseUrl}/signup`, this.registerForm.value)
+      this.http.post<any>(`${environment.backEndUrl}/signup`, this.registerForm.value)
         .subscribe(
           (response) => {
             console.log('Signup successful:', response);

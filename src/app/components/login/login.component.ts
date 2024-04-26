@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.valid) {
-      this.http.post<any>(`${environment.baseUrl}/login`, this.loginForm.value)
+      this.http.post<any>(`${environment.backEndUrl}/login`, this.loginForm.value)
         .subscribe(
           (response) => {
             console.log('Login successful:', response);

@@ -29,7 +29,7 @@ export class PaymentStatusComponent implements OnInit {
   // Method to fetch the payment data
   fetchTransactionData(): void {
     // Make an HTTP POST request to fetch the payment data from the server
-    this.http.post<any>(`${environment.baseUrl}/callback`, this.transactionData)
+    this.http.post<any>(`${environment.backEndUrl}/callback`, this.transactionData)
       .subscribe(
         (response) => {
           // Handle the response data here

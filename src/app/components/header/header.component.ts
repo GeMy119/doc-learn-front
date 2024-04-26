@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     // Send a request to your backend to log the user out
-    this.http.post<any>(`${environment.baseUrl}/logout`, {}).subscribe(
+    this.http.post<any>(`${environment.backEndUrl}/logout`, {}).subscribe(
       (response) => {
         console.log('Logout successful:', response);
         // Clear any local storage or session storage if needed

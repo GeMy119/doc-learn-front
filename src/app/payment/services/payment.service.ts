@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.backEndUrl;
 
   constructor(private http: HttpClient) { }
 
