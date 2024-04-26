@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,19 +15,19 @@ export class PaymentNewComponent implements OnInit {
   iframeURL: string = "";
   loading: boolean = false; // Add loading variable
   paymentForm!: FormGroup;
-  
+
   constructor(
     private router: Router,
     private paymentService: PaymentService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.paymentForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       phone: ['', [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
-      email: ['', [Validators.required,Validators.email, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
       isChecked: [false, Validators.requiredTrue]
     });
   }
@@ -37,38 +38,37 @@ export class PaymentNewComponent implements OnInit {
   }
 
   initiatePayment() {
-    // Set loading to true before initiating payment
-    this.loading = true;
+    // Retrieve the token from localStorage
+    const token = localStorage.getItem('token');
 
-    // Save payment data to MongoDB before initiating payment
-    const paymentData = {
-      firstName: this.paymentForm.value.firstName,
-      lastName: this.paymentForm.value.lastName,
-      phone: this.paymentForm.value.phone,
-      email: this.paymentForm.value.email,
-      isChecked: this.paymentForm.value.isChecked, // Add isChecked field
-    };
+    if (!token) {
+      console.error('Token not found in localStorage');
+      // Handle the case where token is not found
+      // For example, you can redirect the user to the login page
+      // or display an error message to inform the user
+      return;
+    }
 
-    this.paymentService.savePaymentData(paymentData).subscribe(
+    this.paymentService.initiatePayment(token).subscribe(
       (response) => {
-        console.log('Payment data saved:', response);
-        // Proceed with payment initiation
-        this.paymentService.initiatePayment().subscribe(
-          (response) => {
-            console.log('Initiate payment response:', response);
-            this.iframeURL = response.iframeURL;
-            window.location.href = this.iframeURL;
-            this.loading = false; // Set loading to false after payment initiation
-          },
-          (error) => {
-            console.error('Error initiating payment:', error);
-            this.loading = false; // Set loading to false in case of error
-          }
-        );
+        console.log('Initiate payment response:', response);
+        this.iframeURL = response.iframeURL;
+        window.location.href = this.iframeURL;
       },
-      (error) => {
-        console.error('Error saving payment data:', error);
-        this.loading = false; // Set loading to false in case of error
+      (error: HttpErrorResponse) => {
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error occurred
+          console.error('An error occurred:', error.error.message);
+          // Handle client-side error
+        } else {
+          // Backend returned an unsuccessful response code
+          console.error(
+            `Backend returned code ${error.status}, ` +
+            `body was: ${JSON.stringify(error.error)}`
+          );
+          // Handle backend error
+          // For example, display an error message to the user
+        }
       }
     );
   }

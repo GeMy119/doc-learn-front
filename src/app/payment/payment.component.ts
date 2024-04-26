@@ -19,6 +19,7 @@ export class PaymentComponent implements OnInit {
   initiatePayment() {
     // Retrieve the token from localStorage
     const token = localStorage.getItem('token');
+    console.log(token)
 
     if (!token) {
       console.error('Token not found in localStorage');

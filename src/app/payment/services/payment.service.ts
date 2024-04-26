@@ -16,8 +16,8 @@ export class PaymentService {
     return this.http.post<any>(`${this.apiUrl}/initiatePayment`, {}, { headers });
   }
 
-  // savePaymentData(token: string, data: any): Observable<any> {
-  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  //   return this.http.post<any>(`${this.apiUrl}/savePaymentData`, data, { headers });
-  // }
+  savePaymentData(data: any): Observable<any> {
+    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<any>(`${this.apiUrl}/savePaymentData`, data);
+  }
 }

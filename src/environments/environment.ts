@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseUrl: "https://doc-learn-back-end.vercel.app/"
+  baseUrl: "https://doc-learn-back-end.vercel.app"
 };
 
 /*
