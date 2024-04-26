@@ -8,7 +8,7 @@ import { ExamEndRoundComponent } from './components/exam-end-round/exam-end-roun
 import { ChooseFacultyComponent } from './components/choose-faculty/choose-faculty.component';
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 import { AboutComponent } from './components/about/about.component';
-import { PaymentNewComponent } from './components/payment-new/payment-new.component';
+import { PaymentNewComponent } from '../../payment-new/payment-new.component';
 import { PaymentStatusComponent } from './components/payment-status/payment-status.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component'
