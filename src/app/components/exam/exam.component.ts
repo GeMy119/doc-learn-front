@@ -78,9 +78,10 @@ export class ExamComponent implements OnInit {
   }
 
   getCurrentPageQuestions(): any[] {
-    if (!this.questions) {
-      return [];
-    }
+    // if (!Array.isArray(this.questions)) {
+    //   console.error('Questions data is not an array:', this.questions);
+    //   return [];
+    // }
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = Math.min(startIndex + this.pageSize, this.questions.length);
     return this.questions.slice(startIndex, endIndex);
@@ -98,6 +99,10 @@ export class ExamComponent implements OnInit {
   }
 
   showResult(): void {
+    // if (!Array.isArray(this.questions)) {
+    //   console.error('Questions data is not an array:', this.questions);
+    //   return;
+    // }
     // Count the correct answers
     this.correctAnswers = this.questions.filter(question => question.selectedAnswer === question.Answer).length;
 
@@ -128,7 +133,8 @@ export class ExamComponent implements OnInit {
   closePopup(): void {
     this.isLoading = true;
     this.service.editPay(this.token).subscribe(
-      () => {
+      (response) => {
+        console.log(response)
         // Edit pay successful
         this.isLoading = false;
         this.isPopupOpen = false;
@@ -138,7 +144,7 @@ export class ExamComponent implements OnInit {
       (error) => {
         // Error editing pay
         this.isLoading = false;
-        console.error('Error editing pay:', error);
+        console.log('Error editing pay:', error);
         // Handle error as needed
       }
     );
