@@ -99,7 +99,6 @@ export class ExamComponent implements OnInit {
 
   showResult(): void {
     // Count the correct answers
-    this.editPay(this.token)
     this.correctAnswers = this.questions.filter(question => question.selectedAnswer === question.Answer).length;
 
     // Calculate the total number of questions
@@ -115,22 +114,34 @@ export class ExamComponent implements OnInit {
     this.isPopupOpen = true;
   }
 
-  editPay(token: string): void {
-    this.service.editPay(token).subscribe(
-      (response) => {
-        console.log('Edit Pay Successful', response);
+  // editPay(token: string): void {
+  //   this.service.editPay(token).subscribe(
+  //     (response) => {
+  //       console.log('Edit Pay Successful', response);
+  //     },
+  //     (error) => {
+  //       this.payError = true
+  //       console.log('Error editing pay:', error);
+  //     }
+  //   );
+  // }
+  closePopup(): void {
+    this.isLoading = true;
+    this.service.editPay(this.token).subscribe(
+      () => {
+        // Edit pay successful
+        this.isLoading = false;
+        this.isPopupOpen = false;
+        localStorage.removeItem('token');
+        this.router.navigateByUrl('/login');
       },
       (error) => {
-        this.payError = true
-        console.log('Error editing pay:', error);
+        // Error editing pay
+        this.isLoading = false;
+        console.error('Error editing pay:', error);
+        // Handle error as needed
       }
     );
-  }
-  closePopup(): void {
-    this.editPay(this.token)
-    this.isPopupOpen = false;
-    localStorage.removeItem('token');
-    this.router.navigateByUrl('/login');
   }
   @HostListener('contextmenu', ['$event'])
   onRightClick(event: Event): void {
