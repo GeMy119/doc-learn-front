@@ -99,6 +99,7 @@ export class ExamComponent implements OnInit {
 
   showResult(): void {
     // Count the correct answers
+    this.editPay(this.token)
     this.correctAnswers = this.questions.filter(question => question.selectedAnswer === question.Answer).length;
 
     // Calculate the total number of questions
