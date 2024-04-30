@@ -16,7 +16,6 @@ export class QuestionsService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     // Making GET request with options including headers
     return this.http.get<any>(`${this.apiURL}/questions`, { headers });
   }
