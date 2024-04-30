@@ -1,17 +1,23 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionsService {
 
-  apiURL = "http://localhost:4000/questions";
+  apiURL = "https://doc-learn-back-end.vercel.app/questions";
+
   constructor(private http: HttpClient) { }
 
-  getAllQuestions() {
-    return this.http.get(this.apiURL)
+  getAllQuestions(token: any): Observable<any> {
+    // Creating HttpHeaders object with Authorization header
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Making GET request with options including headers
+    return this.http.get<any>(this.apiURL, { headers });
   }
 }

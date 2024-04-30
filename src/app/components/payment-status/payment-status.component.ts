@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../environments/environment"
 
@@ -25,15 +25,25 @@ export class PaymentStatusComponent implements OnInit {
       }
     });
   }
-
   // Method to fetch the payment data
   fetchTransactionData(): void {
+    // Get token from local storage
+    const token = localStorage.getItem('token');
+    // Check if token exists
+    if (!token) {
+      console.error('Token not found in local storage');
+      return;
+    }
+    // Create headers with Authorization token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     // Make an HTTP POST request to fetch the payment data from the server
-    this.http.post<any>(`${environment.backEndUrl}/callback`, this.transactionData)
+    this.http.post<any>(`${environment.backEndUrl}/callback`, this.transactionData, { headers })
       .subscribe(
         (response) => {
           // Handle the response data here
-          console.log(response)
+          console.log(response);
         },
         (error) => {
           console.error('Error fetching payment data:', error);

@@ -13,17 +13,24 @@ export class ExamEndRoundComponent implements OnInit {
   questions !: any[]; // Array to hold questions
   currentPage: number = 0;
   pageSize: number = 2;
-  correctAnswers !: number ;
+  correctAnswers !: number;
   totalQuestions: number = 0;
   score: number = 0;
   message: string = '';
   isPopupOpen: boolean = false;
   isLoading: boolean = false;
+  token!: any
+
 
   constructor(private router: Router, private http: HttpClient, private service: QuestionsService) { }
 
   ngOnInit(): void {
-    this.service.getAllQuestions().subscribe(
+    this.token = localStorage.getItem('token');
+    if (!this.token) {
+      console.error('Token not found in local storage');
+      return;
+    }
+    this.service.getAllQuestions(this.token).subscribe(
       (questions) => {
         this.questions = questions as any[];
       },
@@ -34,17 +41,18 @@ export class ExamEndRoundComponent implements OnInit {
     this.getQuestions()
     this.isLoading = true;
   }
-  
+
   getQuestions() {
-    this.service.getAllQuestions().subscribe((res: any) => {
+    this.service.getAllQuestions(this.token).subscribe((res: any) => {
       this.questions = res.questions.slice(0, 10);
-        this.totalQuestions = this.questions.length;
-        this.isLoading = false;
-      },
+      this.totalQuestions = this.questions.length;
+      this.isLoading = false;
+    },
       (error) => {
         console.error('Error fetching questions:', error);
-        this.isLoading = false;}
-      )
+        this.isLoading = false;
+      }
+    )
   }
 
 
@@ -65,6 +73,9 @@ export class ExamEndRoundComponent implements OnInit {
   }
 
   getCurrentPageQuestions(): any[] {
+    if (!this.questions) {
+      return [];
+    }
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = Math.min(startIndex + this.pageSize, this.questions.length);
     return this.questions.slice(startIndex, endIndex);
@@ -83,21 +94,21 @@ export class ExamEndRoundComponent implements OnInit {
 
   showResult(): void {
     // Count the correct answers
-    this.correctAnswers = this.questions.filter(question => question.selectedAnswer  === question.Answer).length;
-  
+    this.correctAnswers = this.questions.filter(question => question.selectedAnswer === question.Answer).length;
+
     // Calculate the total number of questions
     this.totalQuestions = this.questions.length;
-  
+
     // Calculate the score
     this.score = (this.correctAnswers / this.totalQuestions) * 100;
-  
+
     // Create the message to display
     this.message = `You answered ${this.correctAnswers} out of ${this.totalQuestions} questions correctly. Your result is ${this.score.toFixed(2)}%`;
-  
+
     // Open the popup
     this.isPopupOpen = true;
   }
-  
+
 
   closePopup(): void {
     this.isPopupOpen = false;
@@ -121,7 +132,7 @@ export class ExamEndRoundComponent implements OnInit {
       event.preventDefault(); // Prevent Ctrl + V
       alert('You cannot copy or print the exam :D')
     }
-    
+
     // Add more conditions for other keyboard shortcuts
   }
 }
