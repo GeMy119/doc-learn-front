@@ -20,6 +20,7 @@ export class ExamComponent implements OnInit {
   isPopupOpen: boolean = false;
   isLoading: boolean = false;
   token!: any
+  payError: boolean = false
 
   constructor(private router: Router, private http: HttpClient, private service: QuestionsService) { }
 
@@ -34,13 +35,17 @@ export class ExamComponent implements OnInit {
         this.questions = questions as any[];
       },
       (error) => {
-        console.error('Error fetching product details:', error);
+        this.payError = true
+        console.log('Error fetching product details:', error);
       }
     );
     this.getQuestions()
     this.isLoading = true;
   }
-
+  redirectToPayment(): void {
+    // Assuming your payment page route is '/payment'
+    this.router.navigateByUrl('/payment-final');
+  }
   getQuestions() {
     this.service.getAllQuestions(this.token).subscribe((res: any) => {
       console.log(res)
@@ -49,7 +54,7 @@ export class ExamComponent implements OnInit {
       this.isLoading = false;
     },
       (error) => {
-        console.error('Error fetching questions:', error);
+        console.error('Error fetching questions:', error.status);
         this.isLoading = false;
       }
     )
@@ -115,6 +120,7 @@ export class ExamComponent implements OnInit {
         console.log('Edit Pay Successful', response);
       },
       (error) => {
+        this.payError = true
         console.log('Error editing pay:', error);
       }
     );
