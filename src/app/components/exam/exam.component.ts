@@ -109,8 +109,18 @@ export class ExamComponent implements OnInit {
     this.isPopupOpen = true;
   }
 
-
+  editPay(token: string): void {
+    this.service.editPay(token).subscribe(
+      (response) => {
+        console.log('Edit Pay Successful', response);
+      },
+      (error) => {
+        console.log('Error editing pay:', error);
+      }
+    );
+  }
   closePopup(): void {
+    this.editPay(this.token)
     this.isPopupOpen = false;
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');

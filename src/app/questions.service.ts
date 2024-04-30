@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class QuestionsService {
 
-  apiURL = "https://doc-learn-back-end.vercel.app/questions";
+  apiURL = "https://doc-learn-back-end.vercel.app";
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +18,18 @@ export class QuestionsService {
     });
 
     // Making GET request with options including headers
-    return this.http.get<any>(this.apiURL, { headers });
+    return this.http.get<any>(`${this.apiURL}/questions`, { headers });
   }
+  editPay(token: string): Observable<any> {
+    const url = `${this.apiURL}/editPay`;
+
+    // Creating HttpHeaders object with Authorization header
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Passing headers in the request options
+    return this.http.put<any>(url, {}, { headers });
+  }
+
 }

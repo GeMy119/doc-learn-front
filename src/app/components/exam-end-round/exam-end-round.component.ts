@@ -44,6 +44,7 @@ export class ExamEndRoundComponent implements OnInit {
 
   getQuestions() {
     this.service.getAllQuestions(this.token).subscribe((res: any) => {
+      console.log(res)
       this.questions = res.questions.slice(0, 10);
       this.totalQuestions = this.questions.length;
       this.isLoading = false;
